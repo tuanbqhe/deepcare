@@ -45,7 +45,8 @@ export class DbConnectionService {
   }
   closeSpecificConnection(partner_code: string) {
     try {
-      return getConnectionManager().get(partner_code).close();
+      getConnectionManager().get(partner_code).close();
+      return { message: `Closed ${partner_code}` };
     } catch (error) {
       throw error;
     }
@@ -69,6 +70,8 @@ export class DbConnectionService {
         synchronize: false,
         name: partner_code,
       });
+
+      return { message: `Reconencted ${partner_code}` };
     } catch (error) {
       throw error;
     }
@@ -76,7 +79,7 @@ export class DbConnectionService {
   async addConnection(dbConfig) {
     try {
       const connection = getConnectionManager().connections.find(
-        (con) => con.name === dbConfig.database,
+        (con) => con.name === dbConfig.database && con.isConnected,
       );
       if (!connection) {
         dbConfig['name'] = dbConfig.database;
