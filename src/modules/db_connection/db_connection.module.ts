@@ -4,6 +4,7 @@ import { DbConnectionService } from './db_connection.service';
 import { DAN_TOC } from './entity/DAN_TOC.entity';
 import { createConnection } from 'typeorm';
 import { BENH_NHAN } from './entity/BENH_NHAN.entity';
+import { DBConfig } from 'src/configs/database_connection/dbConfig';
 
 @Module({
   imports: [
@@ -26,23 +27,13 @@ export class DbConnectionModule {
   static Connections: any;
   constructor(private DbConnectionService: DbConnectionService) {}
   async onModuleInit() {
-    await createConnection({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '12345',
-      database: 'his_deepcare_catalog',
-      entities: [],
-      synchronize: true,
-      name: 'his_deepcare_catalog',
-    });
+    await createConnection(DBConfig as any);
     const connections = await this.DbConnectionService.getAllPartnerConnection(
       'his_deepcare_catalog',
     );
     for (const connection of connections) {
-      const { host, port, user, password, database } = connection;
-      const a = await createConnection({
+      const { host, port, user, password, database, PARTNER_CODE } = connection;
+      await createConnection({
         type: 'mysql',
         host,
         port,
@@ -51,7 +42,7 @@ export class DbConnectionModule {
         database,
         entities: [DAN_TOC, BENH_NHAN],
         synchronize: false,
-        name: database,
+        name: PARTNER_CODE,
       });
     }
   }

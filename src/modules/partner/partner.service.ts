@@ -7,9 +7,10 @@ import { getConnectionManager } from 'typeorm';
 @Injectable()
 export class PartnerService {
   constructor(private readonly DbConnectionService: DbConnectionService) {}
-  async getSpecificConnection(dbName: string) {
+  async getSpecificConnection(partner_code: string) {
     try {
-      const connection = this.DbConnectionService.getSpecificConnection(dbName);
+      const connection =
+        this.DbConnectionService.getSpecificConnection(partner_code);
       return await connection.getRepository(BENH_NHAN).find({});
     } catch (error) {
       throw error;

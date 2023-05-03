@@ -6,10 +6,11 @@ import { DbConnectionService } from 'src/modules/db_connection/db_connection.ser
 @Injectable()
 export class CisPartnerService {
   constructor(private readonly DbConnectionService: DbConnectionService) {}
-  async getSpecificConnection(dbName: string) {
+  async getSpecificConnection(partner_code: string) {
     try {
       getConnectionManager().connections.map((con) => console.log(con.name));
-      const connection = this.DbConnectionService.getSpecificConnection(dbName);
+      const connection =
+        this.DbConnectionService.getSpecificConnection(partner_code);
       return await connection.getRepository(BENH_NHAN).find({});
     } catch (error) {
       throw error;

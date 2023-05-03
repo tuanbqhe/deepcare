@@ -17,17 +17,19 @@ export class DbConnectionController {
   async getConnection() {
     return await this.DbConnectionService.getSpecificConnection('n');
   }
-  @Get('reloadConnection/:dbName')
-  reLoadConnection(@Param('dbName') dbName: string) {
-    return this.DbConnectionService.reloadSpecificConnection(dbName);
+  @Get('closeConnection/:partner_code')
+  reLoadConnection(@Param('partner_code') partner_code: string) {
+    return this.DbConnectionService.closeSpecificConnection(partner_code);
   }
 
   @Post('addConnection')
   async addConnection(@Body() dbConfig: any) {
     return await this.DbConnectionService.addConnection(dbConfig);
   }
-  @Get('reConnection/:dbName')
-  reConnection(@Param('dbName') dbName: string) {
-    return this.DbConnectionService.reConncetionSpecificConnection(dbName);
+  @Get('reConnection/:partner_code')
+  reConnection(@Param('partner_code') partner_code: string) {
+    return this.DbConnectionService.reConnectionSpecificConnection(
+      partner_code,
+    );
   }
 }

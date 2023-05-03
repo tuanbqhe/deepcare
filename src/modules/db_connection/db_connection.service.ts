@@ -6,9 +6,9 @@ import { BENH_NHAN } from './entity/BENH_NHAN.entity';
 
 @Injectable()
 export class DbConnectionService {
-  async getAllPartnerConnection(dbName: string) {
+  async getAllPartnerConnection(partner_code: string) {
     try {
-      const connection = this.getSpecificConnection(dbName);
+      const connection = this.getSpecificConnection(partner_code);
       const query = `SELECT * FROM ( select * from deepcare_partner where STATUS) as pd
       join (select * from partner_db_connection where STATUS) as pc on pd.ID = pc.PARTNER_ID`;
       const result = await connection.query(query);
@@ -17,11 +17,24 @@ export class DbConnectionService {
       throw error;
     }
   }
-
-  getSpecificConnection(dbName: string) {
+  async getPartnerConnection(admin_code: string, partner_code: string) {
     try {
+      const connection = this.getSpecificConnection(admin_code);
+      const query = `SELECT * FROM ( select * from deepcare_partner where STATUS and PARTNER_CODE = '${partner_code}') as pd
+      join (select * from partner_db_connection where STATUS) as pc on pd.ID = pc.PARTNER_ID`;
+      const result = await connection.query(query);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  getSpecificConnection(partner_code: string) {
+    try {
+      if (!partner_code)
+        throw new BadRequestException('partner_code is required');
       getConnectionManager().connections.map((con) => console.log(con.name));
-      const connection = getConnectionManager().get(dbName);
+      const connection = getConnectionManager().get(partner_code);
       if (!connection?.isConnected) {
         throw new BadRequestException('This connection was not connected');
       }
@@ -30,16 +43,32 @@ export class DbConnectionService {
       throw error;
     }
   }
-  reloadSpecificConnection(dbName: string) {
+  closeSpecificConnection(partner_code: string) {
     try {
-      return getConnectionManager().get(dbName).close();
+      return getConnectionManager().get(partner_code).close();
     } catch (error) {
       throw error;
     }
   }
-  reConncetionSpecificConnection(dbName: string) {
+  async reConnectionSpecificConnection(partner_code: string) {
     try {
-      return getConnectionManager().get(dbName).connect();
+      this.getSpecificConnection(partner_code).close();
+      const connectionInfo = await this.getPartnerConnection(
+        process.env.MYSQL_CONNECTION_NAME,
+        partner_code,
+      );
+      const { host, port, user, password, database } = connectionInfo[0];
+      await createConnection({
+        type: 'mysql',
+        host,
+        port,
+        username: user,
+        password,
+        database,
+        entities: [DAN_TOC, BENH_NHAN],
+        synchronize: false,
+        name: partner_code,
+      });
     } catch (error) {
       throw error;
     }
