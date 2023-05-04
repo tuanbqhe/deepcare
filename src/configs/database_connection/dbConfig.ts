@@ -8,6 +8,6 @@ export const DBConfig = {
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DB,
   entities: [],
-  synchronize: true,
+  synchronize: false,
   name: process.env.MYSQL_CONNECTION_NAME,
 };
