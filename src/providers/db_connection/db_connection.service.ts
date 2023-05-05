@@ -43,7 +43,7 @@ export class DbConnectionService {
       throw error
     }
   }
-  closeSpecificConnection({ partner_code }) {
+  closeSpecificConnection(partner_code) {
     try {
       getConnectionManager().get(partner_code).close()
       return { message: `Closed ${partner_code}` }
@@ -51,7 +51,7 @@ export class DbConnectionService {
       throw error
     }
   }
-  async reConnectionSpecificConnection({ partner_code }) {
+  async reConnectionSpecificConnection(partner_code) {
     try {
       this.getSpecificConnection(partner_code).close()
       const connectionInfo = await this.getPartnerConnection(
@@ -110,7 +110,7 @@ export class DbConnectionService {
           password,
           database,
           entities: [DAN_TOC, BENH_NHAN],
-          synchronize: true,
+          synchronize: false,
           name: partner_code,
         })
         return { message: `Reload ${partner_code}` }

@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Post, Param, UsePipes } from '@nestjs/common'
 import { DbConnectionService } from './db_connection.service'
-import { GetConnectionPipe } from '../../common/pipes/getConnection.pipe'
 @Controller('deepcare-partner')
 export class DbConnectionController {
   constructor(private readonly DbConnectionService: DbConnectionService) {}
@@ -13,12 +12,14 @@ export class DbConnectionController {
   }
 
   @Get('getConnection')
-  async getConnection() {
-    return await this.DbConnectionService.getSpecificConnection('n')
+  async getConnection(@Body() data: any) {
+    return await this.DbConnectionService.getSpecificConnection(
+      data?.partner_code,
+    )
   }
   @Post('closeConnection')
   reLoadConnection(@Body() data: any) {
-    return this.DbConnectionService.closeSpecificConnection(data)
+    return this.DbConnectionService.closeSpecificConnection(data?.partner_code)
   }
 
   @Post('addConnection')
@@ -33,8 +34,8 @@ export class DbConnectionController {
   }
 
   // @UsePipes(GetConnectionPipe)
-  @Get('reLoad/:partner_code')
-  reLoad(@Param('partner_code') partner_code: string) {
-    return this.DbConnectionService.reloadConnection(partner_code)
+  @Post('reLoad')
+  reLoad(@Body() data: any) {
+    return this.DbConnectionService.reloadConnection(data?.partner_code)
   }
 }

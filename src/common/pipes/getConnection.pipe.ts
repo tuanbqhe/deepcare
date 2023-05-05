@@ -13,7 +13,7 @@ export class GetConnectionPipe implements PipeTransform {
   transform(value: any) {
     console.log('input: ', value)
     const { partner_code } = value
-    if (!partner_code) throw new BadRequestException('partner_code is required')
+    if (!partner_code) throw new BadRequestException('partner_code is required!')
     const connection = getConnectionManager().get(partner_code)
     if (!connection?.isConnected)
       throw new BadRequestException('This connection is closed')
