@@ -4,7 +4,7 @@ import { kafkaTopics } from '../../configs/kafka_topic'
 
 import { BENH_NHAN } from './entity/BENH_NHAN.entity'
 import { DAN_TOC } from './entity/DAN_TOC.entity'
-import { DbConnectionService } from '../../providers/db_connection/db_connection.service'
+import { DbConnectionService } from '../../providers/mysql_connection/mysql_connection.service'
 import { KafkaProducerService } from './../../providers/kafka/kafka_producer/kafka_producer.service'
 
 @Injectable()

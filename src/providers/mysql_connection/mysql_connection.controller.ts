@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Param, UsePipes } from '@nestjs/common'
-import { DbConnectionService } from './db_connection.service'
+import { DbConnectionService } from './mysql_connection.service'
 @Controller('deepcare-partner')
 export class DbConnectionController {
   constructor(private readonly DbConnectionService: DbConnectionService) {}

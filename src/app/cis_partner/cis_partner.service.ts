@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { BENH_NHAN } from '../partner/entity/BENH_NHAN.entity'
-import { DbConnectionService } from '../../providers/db_connection/db_connection.service'
+import { DbConnectionService } from '../../providers/mysql_connection/mysql_connection.service'
 import { getConnectionManager } from 'typeorm'
 
 @Injectable()

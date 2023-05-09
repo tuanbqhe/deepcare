@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common'
-import { DbConnectionService } from '../../providers/db_connection/db_connection.service'
+import { DbConnectionService } from '../../providers/mysql_connection/mysql_connection.service'
 import { BENH_NHAN } from '../../app/partner/entity/BENH_NHAN.entity'
 import { getConnectionManager } from 'typeorm'
 import { connect } from 'http2'

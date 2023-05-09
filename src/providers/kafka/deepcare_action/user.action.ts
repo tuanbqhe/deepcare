@@ -1,4 +1,4 @@
-import { DbConnectionService } from '../../db_connection/db_connection.service'
+import { DbConnectionService } from '../../mysql_connection/mysql_connection.service'
 import { CisPartnerService } from './../../../app/cis_partner/cis_partner.service'
 
 export const userAction = async ({ type, data }) => {

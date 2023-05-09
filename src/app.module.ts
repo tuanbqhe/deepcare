@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { DbConnectionModule } from './providers/db_connection/db_connection.module'
+import { DbConnectionModule } from './providers/mysql_connection/mysql_connection.module'
 import { CisPartnerModule } from './app/cis_partner/cis_partner.module'
 import { KafkaProducerModule } from './providers/kafka/kafka_producer/kafka_producer.module'
 import { KafkaConsumeModule } from './providers/kafka/kafka_consume/kafka_consume.module'

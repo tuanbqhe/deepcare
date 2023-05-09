@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
-import { DbConnectionController } from './db_connection.controller'
-import { DbConnectionService } from './db_connection.service'
+import { DbConnectionController } from './mysql_connection.controller'
+import { DbConnectionService } from './mysql_connection.service'
 import { DAN_TOC } from '../../app/partner/entity/DAN_TOC.entity'
 import { createConnection } from 'typeorm'
 import { BENH_NHAN } from '../../app/partner/entity/BENH_NHAN.entity'
