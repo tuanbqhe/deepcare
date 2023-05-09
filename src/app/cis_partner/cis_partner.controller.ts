@@ -6,6 +6,6 @@ export class CisPartnerController {
   constructor(private readonly cisPartnerService: CisPartnerService) {}
   @Post('getConnection')
   async getAll(@Body() data: any) {
-    return await this.cisPartnerService.getAll(data)
+    return await this.cisPartnerService.getAll(data?.partner_code)
   }
 }
